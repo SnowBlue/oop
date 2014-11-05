@@ -12,6 +12,4 @@ package restaurantsystem.customer;
 public class Customer {
     public Customer(){}
     private String Name;
-    private Membership Membership;
-    public Membership GetMembership(){return Membership;}
 }

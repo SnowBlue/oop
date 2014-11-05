@@ -16,16 +16,25 @@ public class Membership {
     public Membership(){}
     private String Name;
     private DiscountType Type;
-    private double DiscountAmount;
     private Date Start;
     private Date Expiry;
     public enum DiscountType {
-        Absolute, Percentage, None
+        Basic, Regular, VIP
+    }
+    private double GetDiscountPercentage(DiscountType discountType){
+    	switch (discountType){
+    	case Basic:
+    		return 0.1;
+    	case Regular:
+    		return 0.2;
+    	case VIP:
+    		return 0.3;
+    	}
+    	return 0;
+    	
     }
     public double GetDiscount(double orderAmount){
         if (Expiry.before(GlobalTimer.GetCurrentTime())) return 0;
-        if (Type == DiscountType.Absolute) return DiscountAmount;
-        else if (Type == DiscountType.Percentage) return orderAmount * DiscountAmount;
-        else return 0;
+        return GetDiscountPercentage(Type) * orderAmount;
     }
 }

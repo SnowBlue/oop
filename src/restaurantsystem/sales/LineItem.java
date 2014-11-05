@@ -12,7 +12,7 @@ package restaurantsystem.sales;
 public class LineItem {
     public LineItem(){}
     private int Quantity;
-    private MenuObject Item;
+    private Food Item;
     public String GetName(){
         return Item.Name;
     }
@@ -21,5 +21,8 @@ public class LineItem {
     }
     public double GetTotalPrice(){
         return Quantity * Item.GetPrice();
+    }
+    public void PrintItem(){
+    	System.out.print(Item.Name + " x" + Quantity + ": $" + GetTotalPrice() );
     }
 }

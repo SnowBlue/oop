@@ -13,7 +13,8 @@ import restaurantsystem.customer.*;
  * @author Kenny
  */
 public class Order {
-    public Order(){
+    public Order(int orderId){
+    	this.OrderId = orderId;
         Items = new ArrayList<LineItem>();
     }
     private int OrderId;
@@ -24,11 +25,11 @@ public class Order {
     private Date StartTime;
     public void AddItem(LineItem item){Items.add(item);}
     public int GetOrderId(){return OrderId;}
-    public Invoice GetInvoice(){
+    public Invoice GetInvoice(Membership membership){
         double itemTotal = CalculateItemTotal();
         double serviceCharge = GetServiceCharge(itemTotal);
         double total = itemTotal + serviceCharge;
-        double discount = GetDiscount(total);
+        double discount = GetDiscount(total, membership);
         total -= discount;
         double gst = GetGST(total);
         Invoice summary = new Invoice();
@@ -43,11 +44,12 @@ public class Order {
         return summary;
     }
     public int GetTableNumber(){ return OrderTable.Id;}
-    private double GetOrderTotal(){
+    public List<LineItem> GetItems(){ return Items; }
+    private double GetOrderTotal(Membership membership){
         double itemTotal = CalculateItemTotal();
         double serviceCharge = GetServiceCharge(itemTotal);
         double total = itemTotal + serviceCharge;
-        double discount = GetDiscount(total);
+        double discount = GetDiscount(total, membership);
         total -= discount;
         double gst = GetGST(total);
         return total;
@@ -58,9 +60,9 @@ public class Order {
     private double GetGST(double total){
         return total * GSTRate;
     }
-    private double GetDiscount(double itemTotal){
-        Customer customer = Table.GetCustomer();
-        return customer.GetMembership().GetDiscount(itemTotal);
+    private double GetDiscount(double itemTotal, Membership membership){
+    	if (membership == null) return 0;
+        return membership.GetDiscount(itemTotal);
     }
     private double CalculateItemTotal(){
         double total = 0;
