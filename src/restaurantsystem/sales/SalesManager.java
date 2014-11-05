@@ -14,6 +14,8 @@ import restaurantsystem.sales.report.ReportPeriodType;
  *
  * @author Kenny
  */
+
+//NOTE TO DHRUV. 4 FUNCTIONS TO COMPLETE
 public class SalesManager {
 	private static int OrderNumberTracker = 1;
     public SalesManager(){
@@ -106,9 +108,11 @@ public class SalesManager {
 			}
 		}
 	}
+	//Dhruv you want to do this too?
 	private void RemoveMenuItem(Order order){
 		//remove...
 	}
+	//Dhruv you want to do this too?
 	private void AddMenuItem(Order order){
 		Food selectedItem = new Food();
 			//SelectMenuItem();
